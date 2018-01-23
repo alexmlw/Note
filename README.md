@@ -9,4 +9,6 @@
 ## Темы
 
 1. Протоколы (Protocol)
-  * FTP
+   + FTP
+2. Компьютерные системы (Computer system)
+   + Quantum-pc
