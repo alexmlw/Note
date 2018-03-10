@@ -36,17 +36,22 @@ odds = [ 1, 3, 5, 7, 9, 11, 13, 15, 17, 19,
 
 ```python 
 # Объекты с плавующей точкой
-float = [3.4, 1.0, 55,7]
+float = [3.4, 1.0, 55.7]
+print(float) # output -> [3.4, 1.0, 55.7]
 
 # Список строковых объектов
 words = ['hello', 'world']
+print(words[0]) # output -> 'hello'
 
 # Список различных объектов
 another = ['Toys', 76, 2.2]
+print(another[2]) # output -> 2.2
 
 # Список в списке
 everything = [ float, words, another]
+print(everything[1]) # output -> ['hello', 'world']
 
-ends = [ [ 1, 2, 3], [ 'a', 'b', 'c'], [ 'one', 'two', 'three'] ]
+ends = [ [ 1, 2, 3 ], [ 'a', 'b', 'c' ], [ 'one', 'two', 'three' ] ]
+print(ends) # output -> [ [ 1, 2, 3 ], [ 'a', 'b', 'c' ], [ 'one', 'two', 'three' ] ]
 ```
 
