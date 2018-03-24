@@ -55,6 +55,30 @@ ends = [ [ 1, 2, 3 ], [ 'a', 'b', 'c' ], [ 'one', 'two', 'three' ] ]
 print(ends) # output -> [ [ 1, 2, 3 ], [ 'a', 'b', 'c' ], [ 'one', 'two', 'three' ] ]
 ```
 
+Переменная может **ссылаться** на список.
+
+```python
+>>> first = [1, 2, 3, 4, 5]
+>>> first
+[1, 2, 3, 4, 5]
+>>> second = first
+>>> second
+[1, 2, 3, 4, 5]
+>>> second.append(6)
+>>> second
+[1, 2, 3, 4, 5, 6]
+>>> first
+[1, 2, 3, 4, 5, 6]
+```
+Как видно по коду, списоки first и second ссылаются на одни и теже данные. Строка 
+```python
+second = first
+```
+равносильна следующему коду на языке C
+```c
+int* second = &first
+```
+
 ##  Методы, определенные для работы со списком.
 
 ### Метод remove
@@ -165,3 +189,24 @@ IndexError: pop index out of range
 >>> nums
 [1, 2, 3, 4]
 ```
+
+### Метод copy
+*listA = listB.copy(), где*
+
+*listA - список A*
+
+*listB - список B*
+
+Метод copy возвращает копию списка.
+
+```python
+>>> numbers = nums.copy()
+>>> numbers
+[1, 2, 3, 4]
+>>> numbers.append(5)
+>>> numbers
+[1, 2, 3, 4, 5]
+>>> nums
+[1, 2, 3, 4]
+```
+
