@@ -1,0 +1,26 @@
+---
+title: "Basic function"
+author: "Alexander Troynin"
+date: "17 04 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Цикл for
+
+for(var in seq) {expr}, где seq обозначает некоторый вектор, содержащий 
+набор значени, который пробегает счетчик цикла var.
+
+Фигурные скобки используются, чтобы "упаковать" несколько операторов в один.
+Если оператор один, тогда можно фигурные скобки не использовать.
+
+```{r}
+for(i in 1:3) print(i)
+```
+
+```{r pressure, echo=FALSE}
+for(i in 1:3) print(i)
+```
