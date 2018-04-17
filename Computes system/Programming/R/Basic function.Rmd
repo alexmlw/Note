@@ -2,7 +2,6 @@
 title: "Basic function"
 author: "Alexander Troynin"
 date: "17 04 2018"
-output: html_document
 ---
 
 ```{r setup, include=FALSE}
