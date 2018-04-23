@@ -1,6 +1,7 @@
 ---
-title: "Basic type"
-output: html_notebook
+title: "Basic function"
+author: "Alexander Troynin"
+date: "17 04 2018"
 ---
 # Vector
 
@@ -13,6 +14,5 @@ output: html_notebook
 ```{r}
 my.vector <- c(1, 2, 3, 4)
 my.vector
-[1] 1 2 3 4
 ```
 

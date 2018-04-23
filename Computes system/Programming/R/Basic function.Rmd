@@ -2,6 +2,7 @@
 title: "Basic function"
 author: "Alexander Troynin"
 date: "17 04 2018"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -17,9 +18,5 @@ for(var in seq) {expr}, где seq обозначает некоторый ве�
 Если оператор один, тогда можно фигурные скобки не использовать.
 
 ```{r}
-for(i in 1:3) print(i)
-```
-
-```{r pressure, echo=FALSE}
 for(i in 1:3) print(i)
 ```
