@@ -1,7 +1,0 @@
----
-title: "Section 1"
-author: "Alexander Troynin"
-date: "25 04 2018"
-output: html_document
----
-
