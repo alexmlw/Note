@@ -53,3 +53,9 @@ prop.table(table(heights$sex))
 аргументе GG-график автоматически отображает пересекающиеся области
 с разными цветами.
 
+```{r include = False}
+x <- heights$height[heights$sex == "Male"]
+```
+```{r}
+p <- seq(0.05, 0.95, 0.05)
+```
