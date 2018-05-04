@@ -66,9 +66,10 @@ GG-график автоматически отображает пересека
 
 Для получения квантилей для данных мы можем использовать функцию quantile.
 
-```{r include = False}
+```{r}
 x <- heights$height[heights$sex == "Male"]
 ```
+
 ```{r}
 p <- seq(0.05, 0.95, 0.05)
 
@@ -90,6 +91,7 @@ theoretical_quantiles <- qnorm( p, mean = mean(x), sd = sd(x))
 plot(theoretical_quantiles, observed_quantiles)
 abline(0,1)
 ```
+
 Ящик с усами (Boxplot), диаграмма размаха — график, использующийся в описательной
 статистике, компактно изображающий одномерное распределение вероятностей.
 

@@ -1,0 +1,7 @@
+---
+title: "Indexing, Data Wrangling, Plots"
+author: "Alexander Troynin"
+date: "03 05 2018"
+output: html_document
+---
+
