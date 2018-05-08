@@ -1,0 +1,6 @@
+---
+title: "Introduction to Programming in R"
+author: "Alexander Troynin"
+date: "08 05 2018"
+output: html_document
+---
