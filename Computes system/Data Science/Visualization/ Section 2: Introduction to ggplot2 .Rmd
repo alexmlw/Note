@@ -1,0 +1,80 @@
+---
+title: 'Section 2: Introduction to ggplot2'
+author: "Alexander Troynin"
+date: "13 05 2018"
+output: html_document
+---
+
+```{r include=FALSE}
+library("ggplot2")
+library("dslabs")
+library("dplyr")
+library("ggrepel")
+library("ggthemes")
+library("gridExtra")
+```
+
+Установим пакет ggplot2 и загрузим его:
+
+```r
+install.packages("ggplot2")
+library("ggplot2")
+# Установим стили
+install.packages("ggthemes")
+library("ggthemes")
+install.packages("ggrepel")
+library("ggrepel")
+install.packages("gridExtra")
+library("gridExtra")
+```
+
+```{r}
+# Создадим объект класса ggplot с данными murders.
+p <- ggplot(data = murders, aes(population/10^6, total, label = abb))
+class(p)
+r <- murders %>% summarize(rate = sum(total) / sum(population) * 10^6) %>% .$rate
+# Для того чтобы накладывать слои на график мы будем
+# использовать знак +.
+# Функция aes связывает данные с тем, что мы видим
+# на графике.
+p <- p + 
+  geom_abline(intercept = log10(r), lty = 2, color = "darkgrey") +
+  geom_point(aes(col=region), size =3) +
+  geom_text_repel() +
+  scale_x_log10() + scale_y_log10() +
+  scale_color_discrete(name = "Region") +
+  xlab("Populations in millions (log scale)") +
+  ylab("Total number of murders (log scale)") +
+  ggtitle("US Gun Murders in US 2010") +
+  theme_economist()
+
+#ds_theme_set()
+
+print(p)
+```
+
+```{r}
+params <- heights %>% 
+  filter(sex=="Male") %>% 
+  summarize(mean = mean(height), sd(height))
+
+height_male <- heights %>% filter(sex=="Male") %>%
+  ggplot(aes(x = height))
+
+p1 <- height_male +
+  geom_histogram(binwidth = 1, fill = "blue", col = "black") +
+  xlab("Male heights in inches") +
+  ggtitle("Histogram")
+
+p2 <- height_male +
+  geom_histogram(binwidth = 2, fill = "blue", col = "black") +
+  xlab("Male heights in inches") +
+  ggtitle("Histogram")
+
+p3 <- height_male +
+  geom_histogram(binwidth = 3, fill = "blue", col = "black") +
+  xlab("Male heights in inches") +
+  ggtitle("Histogram")
+
+grid.arrange(p1, p2, p3, ncol = 3)
+```

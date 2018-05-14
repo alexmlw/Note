@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Data Visualization and Distributions"
+title: " Section 2: Introduction to Data Visualization and Distributions"
 author: "Alexander Troynin"
 date: "25 04 2018"
 output: html_document
