@@ -1,0 +1,114 @@
+---
+title: "Section 3: Summarizing with dplyr"
+author: "Alexander Troynin"
+date: "04 06 2018"
+output: html_document
+---
+
+Нам понадобится tidyverse. Установим его.
+
+```r
+install.packages("tidyverse")
+```
+
+```{r}
+library(tidyverse)
+library(dslabs)
+data(heights)
+```
+
+Функция summarize в dplyr обеспечивает способ вычисления
+сводной статистики с интуитивно понятным и читаемым кодом.
+Начнем с простого примера, основанного на высотах
+
+```{r}
+s <- heights %>% 
+  filter(sex == "Male") %>% 
+  summarize(average = mean(height), standard_deviation = sd(height))
+print(s)
+
+print(heights %>% 
+  filter(sex == "Male") %>%
+  summarize(median = median(height), minimum = min(height), maximum = max(height)))
+```
+
+Наша таблица данных включает в себя общие убийства и население
+размер для каждого состояния, и мы уже использовали dplyr для
+добавления столбца ставки убийства.
+
+```{r}
+data("murders")
+
+murders <- murders %>% mutate(murder_rate = total/population * 100000)
+summarize(murders, mean(murder_rate))
+```
+
+Но это не является показателем убийств в США, который
+ближе к 3-м.
+
+```{r}
+us_murder_rate <- murders %>%
+  summarize(rate = sum(total) / sum(population) * 100000)
+print(us_murder_rate)
+```
+
+Чтобы получить номер из исходной таблицы данных с одной
+строкой кода, мы можем ввести это.
+
+```{r}
+us_murder_rate <- murders %>%
+  summarize(rate = sum(total) / sum(population) * 100000) %>%
+  .$rate
+print(us_murder_rate)
+```
+
+Это тот же код, но в конце мы ставим точку, затем вводим знак
+доллар вводим rate и этот возвращает число, а не таблицу данных.
+
+Очень распространенная операция и разведка данных состоит в том,
+чтобы сначала разделить данные на группы, а затем вычислить
+для каждой группы.
+
+Например, мы можем захотеть вычислить среднее и стандартное
+отклонение для мужчин и женщин отдельно.
+
+```{r}
+group <- heights %>%
+  group_by(sex) %>%
+  summarize(average = mean(height), standard_deviation = sd(height))
+print(group)
+```
+
+Вычислим средний показатель убийства в четырех регионах страны.
+
+```{r}
+group <- murders %>%
+  group_by(region) %>%
+  summarize(mediane_rate = median(murder_rate))
+print(group)
+```
+
+При анализе набора данных, часто удобно сортировать таблицу
+по разным столбцам. Например, здесь мы сортируем штаты
+по размеру их численности.
+
+```{r}
+print(murders %>%
+        arrange(murder_rate) %>% head())
+```
+
+Поведение функции по умолчанию заключается в сортировке в
+порядке возрастания. В dplyr есть функция D-E-S-C-- которая 
+означает спуск - преобразует вектор в порядке убывания.
+
+```{r}
+print(murders %>%
+        arrange(desc(murder_rate)) %>% head())
+```
+
+Мы также може сделать вложенную сортировку.
+
+```{r}
+print(murders %>%
+        arrange(region, population) %>% top_n(10))
+```

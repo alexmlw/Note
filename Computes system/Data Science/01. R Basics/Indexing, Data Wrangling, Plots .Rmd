@@ -1,0 +1,159 @@
+---
+title: "Indexing, Data Wrangling, Plots"
+author: "Alexander Troynin"
+date: "03 05 2018"
+output: html_document
+---
+
+```{r include=FALSE}
+library(dslabs)
+data(murders)
+```
+
+Попытаемся определить индекс уровня убийств который меньше
+или равно 0.71.
+
+```{r}
+murder_rate <- murders$total/murders$population * 100000
+index <- murder_rate <= 0.71
+print(index)
+```
+
+Мы получили 51 индекс логических значений который можем
+использовать для получения штатов уровень убийств которых
+меньше 0.71.
+
+```{r}
+print(murders$state[index])
+```
+
+which дает нам индекс логического вектора значения которых
+равны истине.
+
+```{r}
+print(which(index))
+```
+
+match функция сообщает нам, какие индексы второго вектора
+соответствуют каждой из записей первого вектора.
+
+```{r}
+index <- match(c("New York", "Florida", "Texas"), murders$state)
+print(index)
+print(murders$state[index])
+```
+
+Если вместо индекса мы хотим знать, будет ли каждый элемент
+первого вектор находится во втором векторе, мы используем
+функцию %in%.
+
+```{r}
+x <- c("a", "b", "c", "d")
+y <- c("a", "b", "f")
+print(y %in% x)
+```
+
+Для работы с базой данных в R есть пакет dplyr. 
+
+```r
+install.packages("dplyr")
+library(dplyr)
+```
+
+```{r include=FALSE}
+library(dplyr)
+```
+
+Чтобы изменить таблицу данных, добавив новый столбец
+или изменить существующий, мы используем mutate.
+
+```{r}
+print(str(murders))
+murders <- mutate(murders, rate=total/population * 100000)
+print(str(murders))
+```
+
+Чтобы фильтровать данные по подмножествам строк, мы
+используем filter.
+
+```{r}
+print(filter(murders, rate <= 0.71))
+```
+
+А для подмножества данных путем выбора конкретных столбцов
+мы используем select.
+
+```{r}
+new_table <- select(murders, state, region, rate)
+print(filter(new_table, rate <= 0.71))
+```
+
+Мы можем создать data frame в R.
+
+```{r}
+grades <- data.frame(names=c("John", "Juan", "Jean", "Yao"),
+                     exam_1 = c(95, 80, 90, 85),
+                     exam_2 = c(90, 85, 85, 90))
+print(grades)
+```
+
+По умолчанию data frame превращает символы в факторы.
+
+```{r}
+print(class(grades$names))
+```
+
+Чтобы избежать этого мы используем AsFactors.
+
+```{r}
+grades <- data.frame(names=c("John", "Juan", "Jean", "Yao"),
+                     exam_1 = c(95, 80, 90, 85),
+                     exam_2 = c(90, 85, 85, 90),
+                     stringsAsFactors = FALSE)
+print(class(grades$names))
+```
+
+rank производит выборку значения ранга в векторе и
+возвращает его.
+
+```{r}
+murders <- mutate(murders, rate = total/population * 100000, rank = rank(-rate))
+print(filter(murders, rank < 6))
+```
+
+nrow/ncol возвращает номер строк/колон хранимых в
+массиве.
+```{r}
+nrow(murders)
+```
+
+%>% линейный оператор, позволяет одни данные обрабатывать
+несколькими функциями записывая в одну строку.
+
+```{r}
+my_states <- murders %>% mutate(rate =  total / population * 100000, rank = rank(-rate)) %>% filter(region %in% c("Northeast", "West") & rate < 1) %>% select(state, rate, rank)
+print(my_states)
+```
+
+Визуализация возможно является главной силой R.
+
+```{r}
+population_in_millions <- murders$population / 10^6
+total_gun_murders <- murders$total
+plot(population_in_millions, total_gun_murders)
+```
+
+Гистограммы являются мощными графическими сводками списка
+чисел, который дает общий обзор типов значений которые
+есть.
+
+```{r}
+hist(murders$rate)
+```
+
+Box plot дают более краткий обзор чем гистораммы, ни их
+легче сравнивать друг с другом.
+
+```{r}
+boxplot(rate~region, data = murders)
+```
